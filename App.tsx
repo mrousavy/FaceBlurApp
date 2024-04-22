@@ -108,7 +108,9 @@ function App(): React.JSX.Element {
             device={device}
             format={format}
             frameProcessor={frameProcessor}
+            fps={format?.maxFps}
             enableFpsGraph={true}
+            pixelFormat="rgb"
           />
         ) : (
           <View style={styles.textContainer}>
