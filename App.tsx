@@ -1,10 +1,17 @@
 import React, {useEffect} from 'react';
 import {Linking, StyleSheet, Text, useColorScheme, View} from 'react-native';
-import {useCameraPermission} from 'react-native-vision-camera';
+import {
+  Camera,
+  CameraPosition,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const {hasPermission, requestPermission} = useCameraPermission();
+  const position: CameraPosition = 'front';
+  const device = useCameraDevice(position);
 
   useEffect(() => {
     if (!hasPermission) {
@@ -14,7 +21,15 @@ function App(): React.JSX.Element {
 
   return (
     <View style={styles.container}>
-      {!hasPermission && (
+      {hasPermission ? (
+        device != null ? (
+          <Camera style={styles.camera} isActive={true} device={device} />
+        ) : (
+          <Text style={styles.text}>
+            Your phone does not have a {position} Camera.
+          </Text>
+        )
+      ) : (
         <Text style={styles.text} numberOfLines={5}>
           FaceBlurApp needs Camera permission.{' '}
           <Text style={styles.link} onPress={Linking.openSettings}>
@@ -31,6 +46,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  camera: {
+    flex: 1,
   },
   text: {
     maxWidth: '60%',
