@@ -82,10 +82,10 @@ function App(): React.JSX.Element {
         points.forEach((point, index) => {
           if (index === 0) {
             // it's a starting point
-            path.moveTo(point.x * MULTIPLIER, point.y * MULTIPLIER);
+            path.moveTo(point.x, point.y);
           } else {
             // it's a continuation
-            path.lineTo(point.x * MULTIPLIER, point.y * MULTIPLIER);
+            path.lineTo(point.x, point.y);
           }
         });
         path.close();
