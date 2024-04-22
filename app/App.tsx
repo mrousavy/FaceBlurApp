@@ -124,7 +124,6 @@ function App(): React.JSX.Element {
             format={format}
             frameProcessor={frameProcessor}
             fps={format?.maxFps}
-            enableFpsGraph={true}
             pixelFormat="rgb"
           />
         ) : (
