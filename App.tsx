@@ -25,17 +25,21 @@ function App(): React.JSX.Element {
         device != null ? (
           <Camera style={styles.camera} isActive={true} device={device} />
         ) : (
-          <Text style={styles.text}>
-            Your phone does not have a {position} Camera.
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Your phone does not have a {position} Camera.
+            </Text>
+          </View>
         )
       ) : (
-        <Text style={styles.text} numberOfLines={5}>
-          FaceBlurApp needs Camera permission.{' '}
-          <Text style={styles.link} onPress={Linking.openSettings}>
-            Grant
+        <View style={styles.textContainer}>
+          <Text style={styles.text} numberOfLines={5}>
+            FaceBlurApp needs Camera permission.{' '}
+            <Text style={styles.link} onPress={Linking.openSettings}>
+              Grant
+            </Text>
           </Text>
-        </Text>
+        </View>
       )}
     </View>
   );
@@ -44,19 +48,23 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   camera: {
     flex: 1,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     maxWidth: '60%',
     fontWeight: 'bold',
     fontSize: 15,
+    color: 'black',
   },
   link: {
-    color: 'rgb(50, 50, 255)',
+    color: 'rgb(80, 80, 255)',
   },
 });
 
