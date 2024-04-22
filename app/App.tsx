@@ -62,7 +62,7 @@ function App(): React.JSX.Element {
     'worklet';
     frame.render();
 
-    const {faces} = detectFaces({frame: frame});
+    const faces = detectFaces(frame);
 
     for (const face of faces) {
       if (face.contours != null) {
