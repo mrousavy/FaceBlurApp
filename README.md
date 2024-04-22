@@ -75,3 +75,13 @@ const frameProcessor = useSkiaFrameProcessor(frame => {
 ```
 
 > See [`App.tsx`](https://github.com/mrousavy/FaceBlurApp/blob/main/app/App.tsx) for the full code.
+
+## How's the Performance?
+
+If you know me you know that my libs are always really fast.
+This is no exception:
+- Frame Processors are built almost entirely with C++ to run Frame analysis with almost zero overhead.
+- Frame Processors run in [Worklets](https://github.com/margelo/react-native-worklets-core/blob/main/docs/WORKLETS.md) on a separate Thread, so they are not interrupted by JS lags.
+- The MLKit models are built with native code and use GPU-acceleration
+- VisionCamera can provide either `yuv` or efficiently converted `rgb` buffers for faster ML execution
+- VisionCamera supports GPU buffer compression
