@@ -19,31 +19,34 @@ This is the relevant code:
 
 ```ts
 const {detectFaces} = useFaceDetector({
- performanceMode: 'fast',
- contourMode: 'all',
- landmarkMode: 'none',
- classificationMode: 'none',
+   performanceMode: 'fast',
+   contourMode: 'all',
+   landmarkMode: 'none',
+   classificationMode: 'none',
 });
 
 const blurRadius = 25;
 const blurFilter = Skia.ImageFilter.MakeBlur(
- blurRadius,
- blurRadius,
- TileMode.Repeat,
- null,
+   blurRadius,
+   blurRadius,
+   TileMode.Repeat,
+   null,
 );
 const paint = Skia.Paint();
 paint.setImageFilter(blurFilter);
 
 const frameProcessor = useSkiaFrameProcessor(frame => {
    'worklet';
+   // 1. Render frame as it is
    frame.render();
-   
+
+   // 2. Detect faces in frame
    const {faces} = detectFaces({frame: frame});
-   
+
+   // 3. Draw a blur mask over each face
    for (const face of faces) {
       const path = Skia.Path.Make();
-      
+
       const necessaryContours: (keyof Contours)[] = [
          'FACE',
          'LEFT_CHEEK',
@@ -62,7 +65,7 @@ const frameProcessor = useSkiaFrameProcessor(frame => {
          });
          path.close();
       }
-      
+
       frame.save();
       frame.clipPath(path, ClipOp.Intersect, true);
       frame.render(paint);
