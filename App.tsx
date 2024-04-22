@@ -5,6 +5,7 @@ import {
   CameraPosition,
   useCameraDevice,
   useCameraPermission,
+  useSkiaFrameProcessor,
 } from 'react-native-vision-camera';
 
 function App(): React.JSX.Element {
@@ -19,11 +20,22 @@ function App(): React.JSX.Element {
     }
   }, [hasPermission, requestPermission]);
 
+  const frameProcessor = useSkiaFrameProcessor(frame => {
+    'worklet';
+    frame.render();
+
+  }, []);
+
   return (
     <View style={styles.container}>
       {hasPermission ? (
         device != null ? (
-          <Camera style={styles.camera} isActive={true} device={device} />
+          <Camera
+            style={styles.camera}
+            isActive={true}
+            device={device}
+            frameProcessor={frameProcessor}
+          />
         ) : (
           <View style={styles.textContainer}>
             <Text style={styles.text}>
