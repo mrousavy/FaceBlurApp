@@ -1,9 +1,17 @@
 import React, {useEffect} from 'react';
-import {Linking, StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import {
   Camera,
   CameraPosition,
   useCameraDevice,
+  useCameraFormat,
   useCameraPermission,
   useSkiaFrameProcessor,
 } from 'react-native-vision-camera';
@@ -14,6 +22,14 @@ function App(): React.JSX.Element {
   const {hasPermission, requestPermission} = useCameraPermission();
   const position: CameraPosition = 'front';
   const device = useCameraDevice(position);
+  const format = useCameraFormat(device, [
+    {
+      videoResolution: Dimensions.get('window'),
+    },
+    {
+      fps: 60,
+    },
+  ]);
 
   useEffect(() => {
     if (!hasPermission) {
@@ -44,6 +60,7 @@ function App(): React.JSX.Element {
             style={styles.camera}
             isActive={true}
             device={device}
+            format={format}
             frameProcessor={frameProcessor}
             enableFpsGraph={true}
           />
