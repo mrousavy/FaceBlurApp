@@ -7,6 +7,7 @@ import {
   useCameraPermission,
   useSkiaFrameProcessor,
 } from 'react-native-vision-camera';
+import {useFaceDetector} from 'react-native-vision-camera-face-detector';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,10 +21,19 @@ function App(): React.JSX.Element {
     }
   }, [hasPermission, requestPermission]);
 
+  const {detectFaces} = useFaceDetector({
+    performanceMode: 'fast',
+    contourMode: 'all',
+    landmarkMode: 'none',
+    classificationMode: 'none',
+  });
+
   const frameProcessor = useSkiaFrameProcessor(frame => {
     'worklet';
     frame.render();
 
+    const {faces} = detectFaces({frame: frame});
+    console.log(`Detected ${faces.length} faces!`);
   }, []);
 
   return (
@@ -35,6 +45,7 @@ function App(): React.JSX.Element {
             isActive={true}
             device={device}
             frameProcessor={frameProcessor}
+            enableFpsGraph={true}
           />
         ) : (
           <View style={styles.textContainer}>
