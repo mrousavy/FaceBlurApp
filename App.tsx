@@ -15,7 +15,11 @@ import {
   useCameraPermission,
   useSkiaFrameProcessor,
 } from 'react-native-vision-camera';
-import {useFaceDetector} from 'react-native-vision-camera-face-detector';
+import {
+  Contours,
+  useFaceDetector,
+} from 'react-native-vision-camera-face-detector';
+import {ClipOp, Skia, TileMode} from '@shopify/react-native-skia';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -44,12 +48,54 @@ function App(): React.JSX.Element {
     classificationMode: 'none',
   });
 
+  const blurRadius = 25;
+  const blurFilter = Skia.ImageFilter.MakeBlur(
+    blurRadius,
+    blurRadius,
+    TileMode.Repeat,
+    null,
+  );
+  const paint = Skia.Paint();
+  paint.setImageFilter(blurFilter);
+
   const frameProcessor = useSkiaFrameProcessor(frame => {
     'worklet';
     frame.render();
 
     const {faces} = detectFaces({frame: frame});
-    console.log(`Detected ${faces.length} faces!`);
+
+    for (const face of faces) {
+      if (face.contours == null) {
+        console.log('no countours for this face!');
+        continue;
+      }
+
+      const path = Skia.Path.Make();
+
+      const necessaryContours: (keyof Contours)[] = [
+        'FACE',
+        'LEFT_CHEEK',
+        'RIGHT_CHEEK',
+      ];
+      for (const key of necessaryContours) {
+        const points = face.contours[key];
+        points.forEach((point, index) => {
+          if (index === 0) {
+            // it's a starting point
+            path.moveTo(point.x * MULTIPLIER, point.y * MULTIPLIER);
+          } else {
+            // it's a continuation
+            path.lineTo(point.x * MULTIPLIER, point.y * MULTIPLIER);
+          }
+        });
+        path.close();
+      }
+
+      frame.save();
+      frame.clipPath(path, ClipOp.Intersect, true);
+      frame.render(paint);
+      frame.restore();
+    }
   }, []);
 
   return (
