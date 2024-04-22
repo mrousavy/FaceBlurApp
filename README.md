@@ -73,3 +73,5 @@ const frameProcessor = useSkiaFrameProcessor(frame => {
    }
 }, [paint, detectFaces])
 ```
+
+> See [`App.tsx`](https://github.com/mrousavy/FaceBlurApp/blob/main/app/App.tsx) for the full code.
