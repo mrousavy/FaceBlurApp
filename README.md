@@ -1,8 +1,11 @@
 # Face Blur App
 
-This is an app to demonstrate the use of VisionCamera to build a realtime face blurring application.
+This is an app to demonstrate the use of VisionCamera to build a realtime face blurring application. 😷
 
 https://github.com/mrousavy/FaceBlurApp/assets/15199031/cb2fd119-9dad-4e8a-9a97-579bb2eae888
+
+It took me 25 minutes to build the app, and this runs on both iOS and Android at 60-120 FPS.
+I can swap out the drawing algorithm, plug in a different shader, use a different ML model like pose-, object- or hand-detection, and change Camera properties within seconds to minutes - it has never been so easy to build Camera apps, all thanks to [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)! 🚀
 
 ## How?
 
