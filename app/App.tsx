@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   Linking,
@@ -22,9 +22,8 @@ import {
 import {ClipOp, Skia, TileMode} from '@shopify/react-native-skia';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   const {hasPermission, requestPermission} = useCameraPermission();
-  const position: CameraPosition = 'front';
+  const [position, setPosition] = useState<CameraPosition>('front');
   const device = useCameraDevice(position);
   const format = useCameraFormat(device, [
     {
@@ -113,8 +112,12 @@ function App(): React.JSX.Element {
     }
   }, []);
 
+  const flipCamera = useCallback(() => {
+    setPosition(pos => (pos === 'front' ? 'back' : 'front'));
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onTouchEnd={flipCamera}>
       {hasPermission ? (
         device != null ? (
           <Camera
