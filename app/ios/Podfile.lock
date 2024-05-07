@@ -1282,7 +1282,7 @@ PODS:
   - VisionCamera/React (4.0.1):
     - React-Core
     - VisionCamera/FrameProcessors
-  - VisionCameraFaceDetector (1.5.0):
+  - VisionCameraFaceDetector (1.6.3):
     - GoogleMLKit/FaceDetection
     - React-Core
     - VisionCamera
@@ -1559,7 +1559,7 @@ SPEC CHECKSUMS:
   RNReanimated: fe4defa06b4fd74169321336788982dbd0674a79
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   VisionCamera: 8e00df84a76cf26ca70ecd3b6ed05dc0d3b60beb
-  VisionCameraFaceDetector: 7d5ea089a282e0128270105343ea9865656a0a14
+  VisionCameraFaceDetector: be54bad388cb6a0a4526badda16ba0260b2f87cf
   Yoga: ff1d575b119f510a5de23c22a794872562078ccf
 
 PODFILE CHECKSUM: 0a46b8c9441fd3fc03aff83f95db58fb57a42cd1
