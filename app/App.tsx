@@ -128,6 +128,7 @@ function App(): React.JSX.Element {
             frameProcessor={frameProcessor}
             fps={format?.maxFps}
             pixelFormat="rgb"
+            exposure={0}
           />
         ) : (
           <View style={styles.textContainer}>
