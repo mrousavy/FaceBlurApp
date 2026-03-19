@@ -25,14 +25,12 @@ function App(): React.JSX.Element {
   const {hasPermission, requestPermission} = useCameraPermission();
   const [position, setPosition] = useState<CameraPosition>('front');
   const device = useCameraDevice(position);
-  const format = useCameraFormat(device, [
-    {
-      videoResolution: Dimensions.get('window'),
-    },
-    {
-      fps: 60,
-    },
-  ]);
+const format = device
+  ? useCameraFormat(device, [
+      { videoResolution: Dimensions.get('window') },
+      { fps: 60 },
+    ])
+  : undefined;
 
   useEffect(() => {
     if (!hasPermission) {
